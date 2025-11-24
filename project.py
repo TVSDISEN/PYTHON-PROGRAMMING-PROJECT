@@ -78,6 +78,7 @@ def move_right(board):
     return changed, move_score
 
 def transpose(board):
+    """ HERE WE NEED TO TRANSPOSE AS UP AND DOWM FUNCTIONS ALSO NEED TO WORK"""
     return [list(row) for row in zip(*board)]
 
 def move_up(board):
@@ -106,12 +107,10 @@ def move_down(board):
 # ---------------- Part 3: User Interaction and Game Logic ----------------
 
 def game_cond(board):
-    """
-    Check game status:
+    """Check game status:
     Return 1 if 2048 tile found (win),
     -1 if no moves possible (lose),
-    0 if game should continue
-    """
+    0 if game should continue"""
     empty = 0
     for i in range(4):
         for j in range(4):
@@ -172,7 +171,7 @@ def game_loop(board):
         move_score = get_user_move(board)
         score += move_score
 
-# ---------------- Part 4: Display and Colors ----------------
+# ---------------- Part 4: Display and Colors ----------------(FOR COLOUR EFFECTS)
 
 try:
     from colorama import Fore, Back, Style, init as colorama_init

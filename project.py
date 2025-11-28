@@ -89,9 +89,8 @@ def move_up(board):
 
 def move_down(board):
     transposed = transpose(board)
-    reversed=[row[::-1] for row in transposed]
-    changed,move_score=move_right(reversed)
-    board[:]=transpose(reversed)
+    changed,move_score=move_right(transposed)
+    board[:]=transpose(transposed)
     return changed,move_score
 
 

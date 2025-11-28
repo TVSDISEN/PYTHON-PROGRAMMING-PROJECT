@@ -127,7 +127,7 @@ def num_span(board):
 def get_user_move(board):
     """Take user input, apply appropriate move, and return move_score."""
     while True:
-        move = input("ENTER THE MOVE( w⬆️, a⬅️, s⬇️, d➡️ ): ").lower()
+        move = input("ENTER THE MOVE(w⬆️, a⬅️, s⬇️, d➡️): ").lower()
         if move == 'w':
             changed, move_score = move_up(board)
         elif move == 'a':

@@ -1,6 +1,6 @@
 import random
 
-# ---------------- Part 1: Board Initialization ----------------
+# ---------------- Part 1: Board Initialization ----------------[BY SUHAS]
 
 def add_new_tile(board):
     """Places a 2 (90%) or 4 (10%) in a random empty cell."""
@@ -21,7 +21,7 @@ def init_board():
     add_new_tile(board)
     return board
 
-# ---------------- Part 2: Movement Functions (Score Added!) ----------------
+# ---------------- Part 2: Movement Functions (Score Added!) ----------------[BY DISEN]
 
 def compress(row):
     """Compress the row by sliding all non-zero elements to the left.
@@ -89,22 +89,13 @@ def move_up(board):
 
 def move_down(board):
     transposed = transpose(board)
-    changed = False
-    move_score = 0
-    for i in range(4):
-        reversed_row = transposed[i][::-1]
-        new_row, compressed = compress(reversed_row)
-        new_row, merged, score_gained = merge(new_row)
-        move_score += score_gained
-        new_row, _ = compress(new_row)
-        new_row = new_row[::-1]
-        if transposed[i] != new_row:
-            changed = True
-        transposed[i] = new_row
-    board[:] = transpose(transposed)
-    return changed, move_score
+    reversed=[row[::-1] for row in transposed]
+    changed,move_score=move_right(reversed)
+    board[:]=transpose(reversed)
+    return changed,move_score
 
-# ---------------- Part 3: User Interaction and Game Logic ----------------
+
+# ---------------- Part 3: User Interaction and Game Logic ----------------[BY SUSHEEL]
 
 def game_cond(board):
     """Check game status:
@@ -160,7 +151,7 @@ def game_loop(board):
     score = 0
     while True:
         print_board(board)
-        print(f"SCORE: {score}")
+        print(f"  SCORE: {score}  ")
         status = game_cond(board)
         if status == 1:
             print('🎉 YOU WON THE GAME 🎉')
@@ -171,7 +162,7 @@ def game_loop(board):
         move_score = get_user_move(board)
         score += move_score
 
-# ---------------- Part 4: Display and Colors ----------------(FOR COLOUR EFFECTS)
+# ---------------- Part 4: Display and Colors ----------------(FOR COLOUR EFFECTS)[BY DHANUSH NARAYAN]
 
 try:
     from colorama import Fore, Back, Style, init as colorama_init

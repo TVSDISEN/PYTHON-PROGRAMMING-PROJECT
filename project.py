@@ -5,8 +5,8 @@ import random
 def add_new_tile(board):
     """Places a 2 (90%) or 4 (10%) in a random empty cell."""
     empty_cells = []
-    for i in range(4):
-        for j in range(4):
+    for i in range(5):
+        for j in range(5):
             if board[i][j] == 0:
                 empty_cells.append((i, j))
     if not empty_cells:
@@ -15,8 +15,8 @@ def add_new_tile(board):
     board[i][j] = 4 if random.random() < 0.1 else 2
 
 def init_board():
-    """Create a 4×4 board and add two random tiles (2 or 4)."""
-    board = [[0 for _ in range(4)] for _ in range(4)]
+    """Create a 5x5 board and add two random tiles (2 or 4)."""
+    board = [[0 for _ in range(5)] for _ in range(5)]
     add_new_tile(board)
     add_new_tile(board)
     return board
@@ -65,7 +65,7 @@ def move_right(board):
     Returns (changed, score_gained_in_move)."""
     changed = False
     move_score = 0
-    for i in range(4):
+    for i in range(5):
         reversed_row = board[i][::-1]
         new_row, compressed = compress(reversed_row)
         new_row, merged, score_gained = merge(new_row)
@@ -102,32 +102,32 @@ def game_cond(board):
     -1 if no moves possible (lose),
     0 if game should continue"""
     empty = 0
-    for i in range(4):
-        for j in range(4):
+    for i in range(5):
+        for j in range(5):
             if board[i][j] == 2048:
                 return 1  # Win
             if board[i][j] == 0:
                 empty += 1
     if empty > 0:
         return 0  # Continue
-    for i in range(4):
-        for j in range(3):
+    for i in range(5):
+        for j in range(4):
             if board[i][j] == board[i][j + 1] or board[j][i] == board[j + 1][i]:
                 return 0  # Moves possible
     return -1  # Lose
 
 def num_span(board):
     """Spawn a new tile (2 or 4) in a random empty spot."""
-    empty_places = [(i, j) for i in range(4) for j in range(4) if board[i][j] == 0]
+    empty_places = [(i, j) for i in range(5) for j in range(5) if board[i][j] == 0]
     if not empty_places:
         return
     i, j = random.choice(empty_places)
-    board[i][j] = 4 if random.random() < 0.1 else 2
+    board[i][j] = 8 if random.random() < 0.1 else 4
 
 def get_user_move(board):
     """Take user input, apply appropriate move, and return move_score."""
     while True:
-        move = input("ENTER THE MOVE(w⬆️, a⬅️, s⬇️, d➡️): ").lower()
+        move = input("ENTER THE MOVE(w⬆️, a⬅️, s⬇️, d➡️,q for saving): ").lower()
         if move == 'w':
             changed, move_score = move_up(board)
         elif move == 'a':
@@ -136,6 +136,8 @@ def get_user_move(board):
             changed, move_score = move_down(board)
         elif move == 'd':
             changed, move_score = move_right(board)
+        elif move=='q':
+            savetofile(board)
         else:
             print("Invalid move! Please enter w, a, s, or d.")
             continue
